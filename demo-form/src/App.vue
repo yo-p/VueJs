@@ -11,7 +11,7 @@ const userCoustmInput = ref('hello')
 const titeInput = ref('title')
 </script>
 <template>
-  <!-- <h1>v-model</h1>
+  <h1>v-model</h1>
   <h2>Text</h2>
   <input v-model.lazy="userInput" type="text" />
   <p>{{ userInput }}</p>
@@ -44,7 +44,7 @@ const titeInput = ref('title')
   <select v-model="selected">
     <option value="" disabled>select one</option>
     <option v-for="option in ['A', 'B', 'C']" :key="option" :value="option">{{ option }}</option>
-  </select> -->
+  </select>
   <p>{{ selected }}</p>
   <h2>Componet</h2>
   <CustomInput v-model.uppercase="userCoustmInput" v-model:title-name="titeInput" />
