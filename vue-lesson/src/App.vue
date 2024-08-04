@@ -1,26 +1,21 @@
 <script setup>
-import { defineAsyncComponent, ref, shallowRef } from 'vue'
-import CompA from './components/CompA.vue'
-// import CompB from './components/CompB.vue'
-import CompC from './components/CompC.vue'
-import BaseLoader from './components/BaseLoader.vue'
-import ErrorMessage from './components/ErrorMessage.vue'
+import { ref } from 'vue'
+import { useRefLimitedHistory } from './composables/limitedHistory'
 
-// const CompB = defineAsyncComponent(() => import('./components/CompB.vue'))
-const CompB = defineAsyncComponent({
-  loader: () => import('./components/CompB.vue'),
-  loadingComponent: BaseLoader,
-  delay: 200,
-  errorComponent: ErrorMessage,
-  timeout: 2000
-})
-
-const currentComp = shallowRef(CompA)
+const count = ref(0)
+const { history, undo } = useRefLimitedHistory(count, ref(3))
+const userInput = ref('')
+const { history: userInputHistory, undo: userInputUndo } = useRefLimitedHistory(userInput, 5)
 </script>
 <template>
-  <h1>ダイナミック コンポーネント</h1>
-  <button @click="currentComp = CompA">A</button>
-  <button @click="currentComp = CompB">B</button>
-  <button @click="currentComp = CompC">C</button>
-  <component :is="currentComp"></component>
+  <h2>count</h2>
+  <p>count: {{ count }}</p>
+  <button @click="count++">+1</button>
+  <p>history: {{ history }}</p>
+  <button @click="undo">undo</button>
+  <h2>user input</h2>
+  <p>userInput: {{ userInput }}</p>
+  <input v-model="userInput" type="text" />
+  <p>userInputHistory: {{ userInputHistory }}</p>
+  <button @click="userInputUndo">undo</button>
 </template>
